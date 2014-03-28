@@ -1020,8 +1020,7 @@ RME is this right
             boolean failIfExists = true;
             outerQuery.addFromQuery(sql, "init", failIfExists);
             sql = outerQuery.toString();
-        }
-        else {
+        } else {
             countRows = true;
         }
         return getQueryCount(

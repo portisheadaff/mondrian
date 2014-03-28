@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2012 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.xmla;
 
 import mondrian.olap.Util;
@@ -222,9 +221,9 @@ abstract class Rowset implements XmlaConstants {
         SessionConnection sc = null;
         try {
             if (needConnection() && connection == null) {
-              sc = handler.getConnectionGrant(
-                       request,
-                       extraProperties);
+                sc = handler.getConnectionGrant(
+                    request,
+                    extraProperties);
                 connection = sc.getConnection();
                 ourConnection = true;
             }

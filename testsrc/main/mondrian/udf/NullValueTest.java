@@ -10,7 +10,6 @@
 //
 // jhyde, Feb 14, 2003
 */
-
 package mondrian.udf;
 
 import mondrian.test.FoodMartTestCase;

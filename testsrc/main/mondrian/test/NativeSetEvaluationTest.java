@@ -1230,7 +1230,7 @@ public class NativeSetEvaluationTest extends BatchTestCase {
         verifySameNativeAndNot(
             "select filter([Product].[Product Name].members, Measures.[Unit Sales] > 0) on 0 from sales",
             "Native native filter mismatch", ctx);
-       
+
         propSaver.reset();
     }
 
@@ -1249,7 +1249,7 @@ public class NativeSetEvaluationTest extends BatchTestCase {
             + "    TC ON 1 \n"
             + "  FROM [Sales] WHERE {([Time].[1997])}\n";
 
-        String mysqlQuery = 
+        String mysqlQuery =
             "select\n"
             + "    `product_class`.`product_family` as `c0`,\n"
             + "    `product_class`.`product_department` as `c1`\n"

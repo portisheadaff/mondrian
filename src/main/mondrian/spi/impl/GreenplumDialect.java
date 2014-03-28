@@ -8,7 +8,6 @@
 // Copyright (C) 2011-2013 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.spi.impl;
 
 import java.sql.Connection;

@@ -15,16 +15,17 @@ import mondrian.olap.Result;
 /**
  * CalculatedCell Work to do:
  *  - implement compilation approach for subcube checks
- *  - review how role based security is applied in codebase for performance ideas
+ *  - review how role based security is applied in codebase
+ *    for performance ideas
  *  - test scenarios below
- *  
+ *
  * Additional Testing Scenarios:
  * - Additional tests for Calculated Cells in virtual cubes
  * - Calculated Cell Solve Order
  * - Calculated Cells with Native Evaluation
  * - Calculated Cells with Security
  * - Calculated Cells along side more complex calculated measures
- * 
+ *
  * @author Will Gorman <wgorman@pentaho.com>
  *
  */
@@ -42,11 +43,14 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"0\"/>\n"
             + "    <CalculatedCellProperty name=\"FORMAT_STRING\" value=\"|0.0|style=red\"/>\n"
             + "    <CalculatedCellProperty name=\"BACK_COLOR\" expression=\"IIf([Measures].CurrentMember &gt; 78500, 12345,54321)\"/>\n"
-            + "  </CalculatedCell>"
-        );
-  
-        Result result = testContext.executeQuery("select {CrossJoin([Gender].[All Gender].Children,[Marital Status].[All Marital Status].Children)} on 0, {[Measures].[Unit Sales]} on 1 from [sales] CELL PROPERTIES BACK_COLOR");
-        String desiredResult = 
+            + "  </CalculatedCell>");
+
+        Result result = testContext.executeQuery(
+            "select {CrossJoin([Gender].[All Gender].Children,[Marital Status]"
+            + ".[All Marital Status].Children)} on 0, "
+            + "{[Measures].[Unit Sales]} on 1 from [sales] "
+            + "CELL PROPERTIES BACK_COLOR");
+        String desiredResult =
             "Axis #0:\n"
             + "{}\n"
             + "Axis #1:\n"
@@ -66,15 +70,15 @@ public class CalculatedCellTest extends FoodMartTestCase {
                 desiredResult,
                 testContext.upgradeActual(resultString));
         }
-  
+
         Cell cell = result.getCell(new int[] {0, 0});
         assertEquals("|0.0|style=red", cell.getPropertyValue("FORMAT_STRING"));
         assertEquals("54321.0", cell.getPropertyValue("BACK_COLOR"));
-        
+
         cell = result.getCell(new int[] {1, 0});
         assertEquals("|0.0|style=red", cell.getPropertyValue("FORMAT_STRING"));
         assertEquals("12345.0", cell.getPropertyValue("BACK_COLOR"));
-        
+
         cell = result.getCell(new int[] {2, 0});
         assertEquals("Standard", cell.getPropertyValue("FORMAT_STRING"));
         assertNull(cell.getPropertyValue("BACK_COLOR"));
@@ -90,8 +94,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F])</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {CrossJoin([Gender].[All Gender].Children,[Marital Status].[All Marital Status].Children)} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -119,8 +123,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], [Marital Status].[S])</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {CrossJoin([Gender].[All Gender].Children,[Marital Status].[All Marital Status].Children)} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -148,8 +152,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], [Marital Status].[Marital Status].Members)</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {CrossJoin([Gender].[All Gender].Children,[Marital Status].Members)} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -169,7 +173,7 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "Row #0: 135,215\n"
             + "Row #0: 66,460\n"
             + "Row #0: 68,755\n");
-        
+
         testContext = TestContext.instance().createSubstitutingCube(
             "Sales",
             null,
@@ -179,8 +183,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], [Customers].[All Customers], [Measures].[Unit Sales], [Marital Status].[Marital Status].Members)</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {CrossJoin([Gender].[All Gender].Children,[Marital Status].Members)} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -212,8 +216,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], Descendants([Time].[1997].[Q1]))</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {NonEmptyCrossJoin([Gender].[All Gender].Children, {[Time].[1997].[Q1].[1], [Time].[1997].[Q2].[4]})} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -239,8 +243,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], Descendants([Time].[1997].[Q1], [Time].[Month]))</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {NonEmptyCrossJoin([Gender].[All Gender].Children, {[Time].[1997].[Q1].[1], [Time].[1997].[Q2].[4]})} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -257,7 +261,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "Row #0: 10,696\n"
             + "Row #0: 10,189\n");
 
-        // Note that this test verifies that the level is having an impact and no cells are changed
+        // Note that this test verifies that the level is having an impact
+        // and no cells are changed
         testContext = TestContext.instance().createSubstitutingCube(
             "Sales",
             null,
@@ -267,8 +272,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], Descendants([Time].[1997].[Q1], [Time].[Year]))</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {NonEmptyCrossJoin([Gender].[All Gender].Children, {[Time].[1997].[Q1].[1], [Time].[1997].[Q2].[4]})} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -295,8 +300,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], Descendants([Time].[1997].[Q1], [Time].[Month], AFTER))</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {NonEmptyCrossJoin([Gender].[All Gender].Children, {[Time].[1997].[Q1].[1], [Time].[1997].[Q2].[4]})} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -312,7 +317,7 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "Row #0: 9,990\n"
             + "Row #0: 10,696\n"
             + "Row #0: 10,189\n");
-  
+
         // this verifies after is taken effect
         testContext = TestContext.instance().createSubstitutingCube(
             "Sales",
@@ -323,8 +328,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], Descendants([Time].[1997].[Q1], [Time].[Month], SELF_AND_BEFORE))</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {NonEmptyCrossJoin([Gender].[All Gender].Children, {[Time].[1997].[Q1].[1], [Time].[1997].[Q2].[4]})} on 0, {[Measures].[Unit Sales]} on 1 from sales",
             "Axis #0:\n"
@@ -353,8 +358,8 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "    <SubCube>([Gender].[F], [Marital Status].[S])</SubCube>\n"
             + "    <Formula>[Measures].CurrentMember * 1.2</Formula>\n"
             + "    <CalculatedCellProperty name=\"SOLVE_ORDER\" value=\"-100\"/>\n"
-            + "  </CalculatedCell>"
-        );
+            + "  </CalculatedCell>");
+
         testContext.assertQueryReturns(
             "select {CrossJoin([Gender].[All Gender].Children,[Marital Status].[All Marital Status].Children)} on 0, {[Measures].[Unit Sales]} on 1 from [Warehouse and Sales]",
             "Axis #0:\n"
@@ -372,3 +377,4 @@ public class CalculatedCellTest extends FoodMartTestCase {
             + "Row #0: 68,755\n");
     }
 }
+// End CalculatedCellTest.java

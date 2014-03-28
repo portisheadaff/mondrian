@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2013 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap;
 
 import mondrian.calc.*;
@@ -1102,18 +1101,23 @@ public class RolapResult extends ResultBase {
                     ci.formatString = cachedFormatString;
                     ci.valueFormatter = valueFormatter;
 
-                    // Calculation of optional fore_color and back_color, if defined in CELL PROPERTIES
+                    // Calculation of optional fore_color and back_color,
+                    //if defined in CELL PROPERTIES
                     if (calcForeColor) {
-                        Object foreProp = revaluator.getProperty("FORE_COLOR", null);
+                        Object foreProp =
+                            revaluator.getProperty("FORE_COLOR", null);
                         if (foreProp instanceof Exp) {
-                            foreProp = revaluator.evaluateProperty((Exp)foreProp);
+                            foreProp =
+                                revaluator.evaluateProperty((Exp)foreProp);
                         }
                         ci.foreColor = foreProp;
                     }
                     if (calcBackColor) {
-                        Object backProp = revaluator.getProperty("BACK_COLOR", null);
+                        Object backProp =
+                            revaluator.getProperty("BACK_COLOR", null);
                         if (backProp instanceof Exp) {
-                            backProp = revaluator.evaluateProperty((Exp)backProp);
+                            backProp =
+                                revaluator.evaluateProperty((Exp)backProp);
                         }
                         ci.backColor = backProp;
                     }
@@ -1138,7 +1142,8 @@ public class RolapResult extends ResultBase {
                     ci.value = o;
                 }
 
-                // TODO: figure out the correct state management so this call doesn't need to exist
+                // TODO: figure out the correct state management so this
+                // call doesn't need to exist
                 revaluator.activeCellCalcs.clear();
             }
         } else {

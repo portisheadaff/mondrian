@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * SessionConnection objects are obtained with
  * {@link #getConnectionGrant} and must be returned via
  * {@link #releaseConnection(SessionConnection)}.<br>
- * (EXPERIMENTAL) 
+ * (EXPERIMENTAL)
  * TODO: doesn't take schema refresh into account;
  * no good for dynamic schemas that may change for the same session;
  */
@@ -104,7 +104,7 @@ public class XmlaSessionConnectionManager {
      * Create a new connection or reuse if available.
      * @param request
      * @param properties
-     * @return
+     * @return Session Connection
      */
     public SessionConnection getConnectionGrant(
         XmlaRequest request,
@@ -113,7 +113,6 @@ public class XmlaSessionConnectionManager {
         String sessionId = request.getSessionId();
         long timeToDie = 0L;
         if (enabled && sessionId != null) {
-
             synchronized (sessionsLock) {
                 SessionConnection sc = sessionConnections.remove(sessionId);
                 if (sc != null && !isStale(sc)) {
@@ -204,7 +203,7 @@ public class XmlaSessionConnectionManager {
 
     /**
      * (MUST SYNC)
-     * @param sc 
+     * @param sc
      */
     private void saveConnection(SessionConnection sc) {
         SessionConnection old =
@@ -221,8 +220,7 @@ public class XmlaSessionConnectionManager {
                 sc.closeQuietly();
                 sessionConnections.put(old.sessionId, old);
                 return;
-            }
-            else {
+            } else {
                 // remove old and keeping adding new
                 old.closeQuietly();
                 timeoutQueue.remove(old);
@@ -249,8 +247,9 @@ public class XmlaSessionConnectionManager {
             return;
         }
         timeoutQueue.add(sc);
-        if (sessionConnections.size() > maxSessionConnections || 
-            timeoutQueue.size() > maxQueueSize ) {
+        if (sessionConnections.size() > maxSessionConnections
+            || timeoutQueue.size() > maxQueueSize)
+        {
             // just panic
             evictAll();
         }

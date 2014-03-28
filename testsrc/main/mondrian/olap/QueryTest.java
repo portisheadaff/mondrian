@@ -10,7 +10,6 @@
 //
 // Shishir, 08 May, 2007
 */
-
 package mondrian.olap;
 
 import mondrian.server.Statement;

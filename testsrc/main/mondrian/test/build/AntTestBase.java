@@ -8,7 +8,6 @@
 // Copyright (C) 2009-2010 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.test.build;
 
 import mondrian.olap.Util;

@@ -13,7 +13,6 @@
 // Copyright (C) 1996-2011, International Business Machines Corporation and
 // others. All Rights Reserved.
 */
-
 package mondrian.util;
 
 import java.math.BigInteger;

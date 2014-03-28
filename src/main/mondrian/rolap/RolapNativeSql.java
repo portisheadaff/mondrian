@@ -8,7 +8,6 @@
 // Copyright (C) 2006-2013 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.rolap;
 
 import mondrian.mdx.*;
@@ -19,10 +18,10 @@ import mondrian.rolap.aggmatcher.AggStar;
 import mondrian.rolap.sql.SqlQuery;
 import mondrian.spi.Dialect;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 /**
  * Creates SQL from parse tree nodes. Currently it creates the SQL that
@@ -573,28 +572,30 @@ public class RolapNativeSql {
     }
 
     /**
-     * This use case allows non empty filtering on count == 0 when EXCLUDEEMPTY is 
-     * specified for a specific set of tuples.
-     * 
+     * This use case allows non empty filtering on count == 0
+     * when EXCLUDEEMPTY is specified for a specific set of tuples.
+     *
      * Note that at this time the following circumstances must be met:
      *  - <Filter Level>.CurrentMember must be specified
-     *  - All other dimensions must include their all member in a crossjoin with the current member
+     *  - All other dimensions must include their all member in a crossjoin
+     *      with the current member
      *  - a measure must be specified in the cross join
-     *  
+     *
      *  So the syntax would look something like this:
-     *  
-     *  Filter([Store].Children, 
-     *  Count(CrossJoin([Store].CurrentMember, CrossJoin([Customer].[All], [Measure].[Sales])), EXCLUDEEMPTY))
-     *  
+     *
+     *  Filter([Store].Children,
+     *  Count(CrossJoin([Store].CurrentMember, CrossJoin([Customer].[All],
+     *  [Measure].[Sales])), EXCLUDEEMPTY))
+     *
      *  This basically is a NON EMPTY check with Filters.
-     *  
+     *
      */
     private class BooleanCountSqlCompiler extends FunCallSqlCompilerBase {
-      
+
         BooleanCountSqlCompiler(int category, SqlCompiler valueCompiler) {
           super(category, "count", 2);
         }
-        
+
         /**
          * Struct used to maintain state during recursion
          */
@@ -635,39 +636,52 @@ public class RolapNativeSql {
                         final RolapCubeHierarchy hierarchy =
                             (RolapCubeHierarchy) evaluator.getCachedResult(
                                 new ExpCacheDescriptor(dimExpr, evaluator));
-                        dimension = (RolapCubeDimension) hierarchy.getDimension();
+                        dimension =
+                            (RolapCubeDimension) hierarchy.getDimension();
                     } else if (dimExpr instanceof LevelExpr) {
                         final RolapCubeLevel level =
                             (RolapCubeLevel) evaluator.getCachedResult(
                                 new ExpCacheDescriptor(dimExpr, evaluator));
                         dimension = (RolapCubeDimension) level.getDimension();
                     }
-                    if (rolapLevel != null && dimension != null && dimension.equals(rolapLevel.getDimension())) {
+                    if (rolapLevel != null && dimension != null
+                        && dimension.equals(rolapLevel.getDimension()))
+                    {
                         rs.currentMemberFound = true;
-                    }          
+                    }
                 } else if (call.getFunName().equals("AddCalculatedMembers")) {
-                    // TODO: Verify there are no calculated members for set referenced, which must only be one-dimensional.
-                    // We can ignore this for now because we only support joining with related dims that include
+                    // TODO: Verify there are no calculated members for set
+                    // referenced, which must only be one-dimensional.
+                    // We can ignore this for now because we only support
+                    // joining with related dims that include
                     // the all member reference.
                     traverseExp(call.getArg(0), rs);
                 } else if (call.getFunName().equals("Children")) {
-                    // for now, will fail if all member isn't in the crossjoin, so no need for specific
+                    // for now, will fail if all member isn't in the
+                    // crossjoin, so no need for specific
                     // Children behavior.
                     if (call.getArg(0) instanceof MemberExpr) {
                         Member m = ((MemberExpr)call.getArg(0)).getMember();
                         rs.nonAllHierarchies.add(m.getHierarchy());
                     } else {
-                        LOGGER.debug("BooleanCountSqlCompiler: Unknown Param for Children: " + call.getArg(0));
+                        LOGGER.debug(
+                            "BooleanCountSqlCompiler: "
+                            + "Unknown Param for Children: " + call.getArg(0));
                         rs.unknownFound = true;
                     }
                 } else if (call.getFunName().equals("Descendants")) {
                     // this usecase only behaves if the all member is referenced
                     boolean allInDecendants = false;
-                    if (call.getArgCount() == 3 && call.getArg(0) instanceof MemberExpr) {
+                    if (call.getArgCount() == 3
+                        && call.getArg(0) instanceof MemberExpr)
+                    {
                         Member m = ((MemberExpr)call.getArg(0)).getMember();
                         if (m.isAll()) {
                             if (call.getArg(2) instanceof Literal) {
-                                if(((Literal)call.getArg(2)).getValue().toString().toLowerCase().indexOf("self") >= 0) {
+                                if (((Literal)call.getArg(2)).getValue()
+                                    .toString().toLowerCase()
+                                    .indexOf("self") >= 0)
+                                {
                                     allInDecendants = true;
                                 }
                             }
@@ -676,15 +690,22 @@ public class RolapNativeSql {
                     if (!allInDecendants) {
                       rs.unknownFound = true;
                     }
-                    // TODO: Add info to allHierarchies / nonAllHierarchies for later processing
+                    // TODO: Add info to allHierarchies / nonAllHierarchies
+                    // for later processing
                 } else {
-                    LOGGER.debug("BooleanCountSqlCompiler: Unknown Function Name: " + call.getFunName());
-                    rs.unknownFound = true; 
+                    LOGGER.debug(
+                        "BooleanCountSqlCompiler: "
+                        + "Unknown Function Name: " + call.getFunName());
+                    rs.unknownFound = true;
                 }
             } else if (exp instanceof MemberExpr) {
-                // Note that we cannot assume that calculated measures are directly tied to a member.  There could be logic in the 
-                // calculated member that sometimes evaluates to empty and other times where it will not.
-                if (( (MemberExpr) exp ).getMember().isMeasure() && !((MemberExpr) exp).getMember().isCalculated()) {
+                // Note that we cannot assume that calculated measures are
+                // directly tied to a member.  There could be logic in the
+                // calculated member that sometimes evaluates to empty and
+                // other times where it will not.
+                if (((MemberExpr) exp).getMember().isMeasure()
+                    && !((MemberExpr) exp).getMember().isCalculated())
+                {
                     rs.measureFound = true;
                 } else {
                     Member m = ((MemberExpr)exp).getMember();
@@ -698,12 +719,15 @@ public class RolapNativeSql {
                 }
             } else if (exp instanceof NamedSetExpr) {
                 NamedSet set = ((NamedSetExpr)exp).getNamedSet();
-                // verify all the elements in the set are measures, which imply that we are joining to the fact table.  At this time we don't support
-                // other scenarios
+                // verify all the elements in the set are measures, which
+                // imply that we are joining to the fact table.  At this
+                // time we don't support other scenarios
                 Exp nsExp = set.getExp();
                 traverseExp(nsExp, rs);
             } else {
-                LOGGER.debug("BooleanCountSqlCompiler: Unknown Expression Type: " + exp);
+                LOGGER.debug(
+                    "BooleanCountSqlCompiler: "
+                    + "Unknown Expression Type: " + exp);
                 rs.unknownFound = true;
             }
         }
@@ -711,19 +735,26 @@ public class RolapNativeSql {
         private List<Hierarchy> getNonEmptyHierarchies(Exp exp) {
             // return null if currentMember is not present at all
             // return null if a measure is not found
-            // return a list of related hierarchies, if their all member is present somewhere in the stack
-            // if there is a hierarchy present without an all member, return null for now.
-  
-            if (!(rolapLevel instanceof RolapCubeLevel) || ((RolapCubeLevel)rolapLevel).getCube().isVirtual()) {
+            // return a list of related hierarchies, if their all member
+            // is present somewhere in the stack
+            // if there is a hierarchy present without an all member,
+            // return null for now.
+
+            if (!(rolapLevel instanceof RolapCubeLevel)
+                || ((RolapCubeLevel)rolapLevel).getCube().isVirtual())
+            {
               // we currently don't support virtual cubes in this use case.
-              // Additional logic would be needed to determine that only a single cube measures are in play
+              // Additional logic would be needed to determine that only a
+              // single cube measures are in play
               return null;
             }
             RecursiveState rs = new RecursiveState();
             traverseExp(exp, rs);
-  
-            // Check all non hierarchies, making sure they are associated with an all member selection for now.
-            // long term, all expressions from non-all hierarchies should get added as predicates to the filter.
+
+            // Check all non hierarchies, making sure they are associated
+            // with an all member selection for now.
+            // long term, all expressions from non-all hierarchies should
+            // get added as predicates to the filter.
               for (Hierarchy h : rs.nonAllHierarchies) {
                 boolean found = false;
                 for (Hierarchy h1 : rs.allHierarchies) {
@@ -736,7 +767,9 @@ public class RolapNativeSql {
                     rs.nonAllHierarchyFound = true;
                 }
             }
-            if (!rs.measureFound || !rs.currentMemberFound || rs.nonAllHierarchyFound || rs.unknownFound) {
+            if (!rs.measureFound || !rs.currentMemberFound
+                || rs.nonAllHierarchyFound || rs.unknownFound)
+            {
                 return null;
             }
             return rs.allHierarchies;
@@ -747,33 +780,38 @@ public class RolapNativeSql {
                 return null;
             }
             Exp[] args = ((FunCall) exp).getArgs();
-            
-            // if (args[1]) is EXCLUDEEMPTY then we have to check for non-emptyness. 
+
+            // if (args[1]) is EXCLUDEEMPTY then we have to
+            // check for non-emptyness.
             // otherwise this is always true and the filter is meaningless.
-            if (!(args[1] instanceof Literal) || !((Literal)args[1]).getValue().equals("EXCLUDEEMPTY")) {
+            if (!(args[1] instanceof Literal)
+                || !((Literal)args[1]).getValue().equals("EXCLUDEEMPTY"))
+            {
                 return null;
             }
-  
+
             List<Hierarchy> hierarchies = getNonEmptyHierarchies(args[0]);
             if (hierarchies == null) {
                 return null;
             }
-            
+
             // args[0]
-            // This is a set, the set should consist of the filtered currentMember and other dimensions,
-            // potentially also specifying the measure in which to join the fact table with.  this will be important in the context
+            // This is a set, the set should consist of the filtered
+            // currentMember and other dimensions,
+            // potentially also specifying the measure in which to join
+            // the fact table with.  this will be important in the context
             // of virtual cubes.
-    
-            
+
+
             // TODO: if the other dimensions in play do not include their all
             // member, we need to filter the result of this query down to those
-            // members.  For instance, if [Another Dim].[Member1] is specified, we need a 
-            // filter on that member to get the right count.  Very similar to 
-            // non empty crossjoin
+            // members.  For instance, if [Another Dim].[Member1] is specified,
+            // we need a filter on that member to get the right count.  Very
+            // similar to non empty crossjoin
             // but without selecting the value from the results.
-            
-            // Returning a no-op, because we want the filter expression to be 
-            // successful, but don't have anything really to add to the SQL 
+
+            // Returning a no-op, because we want the filter expression to be
+            // successful, but don't have anything really to add to the SQL
             // other than the measure we reference for joining on the dimension.
             return "<NOOP>";
         }
@@ -871,7 +909,7 @@ public class RolapNativeSql {
                 Category.Logical, "IsEmpty", numericCompiler));
         booleanCompiler.add(
             new BooleanCountSqlCompiler(
-                Category.Logical,numericCompiler));
+                Category.Logical, numericCompiler));
         booleanCompiler.add(
             new InfixOpSqlCompiler(
                 Category.Logical, "and", "AND", booleanCompiler));

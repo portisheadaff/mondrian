@@ -6737,14 +6737,14 @@ TODO: see above
         private void populateMember(List<Row> rows) throws SQLException {
             SessionConnection sc = null;
             // try {
-                sc = handler.getConnectionGrant(
-                         request,
-                         Collections.<String, String>emptyMap());
-                for (Catalog catalog
-                    : catIter(sc.getConnection(), catNameCond(), catalogCond))
-                {
-                    populateCatalog(catalog, rows);
-                }
+            sc = handler.getConnectionGrant(
+                request,
+                Collections.<String, String>emptyMap());
+            for (Catalog catalog
+                : catIter(sc.getConnection(), catNameCond(), catalogCond))
+            {
+                populateCatalog(catalog, rows);
+            }
             //} finally {
             //    handler.releaseConnection(sc);
             // }

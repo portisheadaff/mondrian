@@ -562,7 +562,7 @@ public class SqlTupleReader implements TupleReader {
     }
 
     /**
-     * This method performs a native count on the tuples being requested. 
+     * This method performs a native count on the tuples being requested.
      */
     public int countTuples(DataSource dataSource) {
         SqlStatement stmt = null;
@@ -578,18 +578,18 @@ public class SqlTupleReader implements TupleReader {
 
             final Pair<String, List<SqlStatement.Type>> pair =
                 makeLevelMembersSql(dataSource);
-            
+
             SqlQuery countQuery = SqlQuery.newQuery(dataSource, "");
             // Add the subquery to the wrapper query.
             countQuery.addFromQuery(
                 pair.left, "countQuery", true);
-    
+
             // Dont forget to select all columns.
             countQuery.addSelect("COUNT(*)", null, null);
             String sql = countQuery.toSqlAndTypes().left;
-            
+
             assert sql != null && !sql.equals("");
-            
+
             stmt = RolapUtil.executeQuery(
                 dataSource, sql, null, maxRows, 0,
                 new SqlStatement.StatementLocus(

@@ -9,11 +9,6 @@
 */
 package mondrian.rolap;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
-
 import mondrian.olap.Exp;
 import mondrian.olap.FunDef;
 import mondrian.olap.Literal;
@@ -25,6 +20,11 @@ import mondrian.rolap.aggmatcher.AggStar;
 import mondrian.rolap.sql.CrossJoinArg;
 import mondrian.rolap.sql.SqlQuery;
 import mondrian.rolap.sql.TupleConstraint;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
 
 /**
  * Computes a Subset in SQL.
@@ -46,8 +46,7 @@ public class RolapNativeSubset extends RolapNativeSet {
         public SubsetConstraint(
             Integer start,
             Integer count,
-            CrossJoinArg[] args, RolapEvaluator evaluator
-            )
+            CrossJoinArg[] args, RolapEvaluator evaluator)
         {
             super(args, evaluator, true);
             this.start = start;

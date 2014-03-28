@@ -1,12 +1,11 @@
 /*
-* This software is subject to the terms of the Eclipse Public License v1.0
-* Agreement, available at the following URL:
-* http://www.eclipse.org/legal/epl-v10.html.
-* You must accept the terms of that agreement to use this software.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+// This software is subject to the terms of the Eclipse Public License v1.0
+// Agreement, available at the following URL:
+// http://www.eclipse.org/legal/epl-v10.html.
+// You must accept the terms of that agreement to use this software.
+//
+// Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
-
 package mondrian.olap.fun;
 
 import mondrian.calc.*;
@@ -39,7 +38,10 @@ class CountFunDef extends AbstractAggregateFunDef {
         super(dummyFunDef);
     }
 
-    public Calc compileCall(final ResolvedFunCall call, final ExpCompiler compiler) {
+    public Calc compileCall(
+        final ResolvedFunCall call,
+        final ExpCompiler compiler)
+    {
         final Calc calc =
             compiler.compileAs(
                 call.getArg(0), null, ResultStyle.ITERABLE_ANY);
@@ -67,8 +69,10 @@ class CountFunDef extends AbstractAggregateFunDef {
                             manyToManyEval,
                             this);
                     if (nativeEvaluator != null) {
-                        // TODO: Test how this performs for empty and non-empty scenarios.
-                        count = (Integer)nativeEvaluator.execute(ResultStyle.VALUE);
+                        // TODO: Test how this performs for
+                        //empty and non-empty scenarios.
+                        count = (Integer)nativeEvaluator.execute(
+                            ResultStyle.VALUE);
                     } else {
                       if (calc instanceof IterCalc) {
                           IterCalc iterCalc = (IterCalc) calc;
@@ -84,7 +88,6 @@ class CountFunDef extends AbstractAggregateFunDef {
                       }
                     }
                     return count;
-                    
                 } finally {
                     evaluator.restore(savepoint);
                 }

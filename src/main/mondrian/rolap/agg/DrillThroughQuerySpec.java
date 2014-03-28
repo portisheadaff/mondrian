@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2013 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.rolap.agg;
 
 import mondrian.olap.MondrianDef;

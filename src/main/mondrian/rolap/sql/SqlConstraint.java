@@ -8,7 +8,6 @@
 // Copyright (C) 2006-2009 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap.sql;
 
 /**

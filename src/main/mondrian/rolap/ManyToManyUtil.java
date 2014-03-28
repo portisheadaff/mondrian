@@ -115,7 +115,6 @@ public class ManyToManyUtil {
      * this method returns the hierarchy for m2m functions for both
      * regular and virtual cubes.
      *
-     * @param evaluator the current evaluator to determine the cube
      * @param m the member to resolve the hierarchy for
      * @return the rolap cube hierarchy
      */
@@ -134,8 +133,8 @@ public class ManyToManyUtil {
      *
      * @param evaluator
      * @param m
-     * @param parentHierarchyList
-     * @return
+     * @param bridgeHierarchyList
+     * @return TupleList with members
      */
     private static TupleList getBridgeMembers(
         Evaluator evaluator,
@@ -149,7 +148,7 @@ public class ManyToManyUtil {
         for (Member dm : ((RolapEvaluator)neweval).root.defaultMembers) {
             neweval.setContext(dm);
         }
-        
+
         List<Member> slicer = ((RolapEvaluator)neweval).getSlicerMembers();
         slicer.clear();
         neweval.setContext(m);
@@ -197,7 +196,7 @@ public class ManyToManyUtil {
                         new SetType(MemberType.Unknown));
             }
             // add crossjoins for the remaining levels.
-            for (int j = 2; j < bridgeHierarchyList.size(); j++ ) {
+            for (int j = 2; j < bridgeHierarchyList.size(); j++) {
                 RolapCubeHierarchy h2 = bridgeHierarchyList.get(j);
                 Exp exp2[] = new Exp[2];
                 exp2[0] = new ResolvedFunCall(
@@ -330,7 +329,7 @@ public class ManyToManyUtil {
      *
      * This is used by the Native Filter and Native Top Count implementations.
      *
-     * @param original evaluator
+     * @param evaluator original
      * @return new evaluator
      */
     public static RolapEvaluator getManyToManyEvaluator(

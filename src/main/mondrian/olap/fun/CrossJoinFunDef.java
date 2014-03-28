@@ -5,10 +5,9 @@
 // You must accept the terms of that agreement to use this software.
 //
 // Copyright (C) 2002-2005 Julian Hyde
-// Copyright (C) 2005-2011 Pentaho and others
+// Copyright (C) 2005-2014 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.olap.fun;
 
 import mondrian.calc.*;
@@ -985,7 +984,7 @@ public class CrossJoinFunDef extends FunDefBase {
      * function call. Includes measures used in calculated measures.
      * @param call
      * @param query
-     * @return
+     * @return List of members.
      */
     private static Set<Member> calculateMeasureSet(
         ResolvedFunCall call,

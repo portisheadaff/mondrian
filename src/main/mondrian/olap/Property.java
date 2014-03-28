@@ -10,7 +10,6 @@
 //
 // jhyde, 12 September, 2002
 */
-
 package mondrian.olap;
 
 import mondrian.spi.PropertyFormatter;
@@ -855,7 +854,7 @@ public class Property extends EnumeratedValues.BasicValue {
         synonyms.put("FORMAT", FORMAT_STRING);
         synonyms.put("NAME", MEMBER_NAME); //TODO: or internal $name?
         // documentation only speaks of an "internal id";
-        synonyms.put("ID", KEY); 
+        synonyms.put("ID", KEY);
 
         // Populate map of upper-case property names.
         for (String propertyName : enumeration.getNames()) {

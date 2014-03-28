@@ -1,12 +1,11 @@
 /*
-* This software is subject to the terms of the Eclipse Public License v1.0
-* Agreement, available at the following URL:
-* http://www.eclipse.org/legal/epl-v10.html.
-* You must accept the terms of that agreement to use this software.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+// This software is subject to the terms of the Eclipse Public License v1.0
+// Agreement, available at the following URL:
+// http://www.eclipse.org/legal/epl-v10.html.
+// You must accept the terms of that agreement to use this software.
+//
+// Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
-
 package mondrian.xmla.impl;
 
 import mondrian.olap.Exp;
@@ -449,13 +448,13 @@ public class DefaultXmlaRequest
             return parameters;
         } catch (Exception e) {
             throw new XmlaException(
-                  CLIENT_FAULT_FC,
-                  HSB_BAD_PARAMETERS_CODE,
-                  HSB_BAD_PARAMETERS_FAULT_FS,
-                  Util.newError(
-                      e,
-                      MSG_INVALID_XMLA
-                      + ":" + "Error reading Parameter element"));
+                CLIENT_FAULT_FC,
+                HSB_BAD_PARAMETERS_CODE,
+                HSB_BAD_PARAMETERS_FAULT_FS,
+              Util.newError(
+                  e,
+                  MSG_INVALID_XMLA
+                  + ":" + "Error reading Parameter element"));
         }
   }
 
@@ -466,8 +465,9 @@ public class DefaultXmlaRequest
         private static Type STRING = new StringType();
         private static Type BOOL = new BooleanType();
         private static Type NUMERIC = new NumericType();
-      
-        private static Map<String, Type> mondrianTypeRegistry = new HashMap<String, Type>();
+
+        private static Map<String, Type> mondrianTypeRegistry =
+            new HashMap<String, Type>();
         static {
             mondrianTypeRegistry.put(XmlaHandler.XSD_STRING, STRING);
             mondrianTypeRegistry.put(XmlaHandler.XSD_BOOLEAN, BOOL);
@@ -481,7 +481,7 @@ public class DefaultXmlaRequest
 
         private String name, value, type;
 
-        public XmlaParameter( String name, String value, String type ) {
+        public XmlaParameter(String name, String value, String type) {
             this.name = name;
             this.value = value;
             this.type = type;
@@ -489,18 +489,16 @@ public class DefaultXmlaRequest
 
         Type getOlapType() {
             Type mondrianType = mondrianTypeRegistry.get(type);
-            return (mondrianType != null) ? mondrianType : STRING; 
+            return (mondrianType != null) ? mondrianType : STRING;
         }
 
         Exp getExpression() {
             Type olapType = getOlapType();
             if (olapType.equals(STRING)) {
                 return Literal.createString(value);
-            }
-            else if (olapType.equals(NUMERIC)) {
+            } else if (olapType.equals(NUMERIC)) {
                 return Literal.create(new BigDecimal(value));
-            }
-            else {
+            } else {
                 // TODO check other types, have fallback or exception
                 return null;
             }
@@ -517,7 +515,8 @@ public class DefaultXmlaRequest
         String ns,
         String childName)
     {
-        Element[] children = XmlaUtil.filterChildElements(element, ns, childName);
+        Element[] children =
+            XmlaUtil.filterChildElements(element, ns, childName);
         if (children.length > 0) {
             return XmlaUtil.textInElement(children[0]);
         }

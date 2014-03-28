@@ -10,7 +10,6 @@
 //
 // remberson, Jan 31, 2006
 */
-
 package mondrian.olap;
 
 import mondrian.test.FoodMartTestCase;

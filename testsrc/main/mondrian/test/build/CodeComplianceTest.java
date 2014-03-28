@@ -8,7 +8,6 @@
 // Copyright (C) 2009-2009 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.test.build;
 
 /**

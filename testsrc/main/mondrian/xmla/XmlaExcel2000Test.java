@@ -10,7 +10,6 @@
 //
 // jhyde, 29 March, 2002
 */
-
 package mondrian.xmla;
 
 import mondrian.test.DiffRepository;

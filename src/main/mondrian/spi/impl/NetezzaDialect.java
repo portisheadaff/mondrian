@@ -8,7 +8,6 @@
 // Copyright (C) 2009-2013 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.spi.impl;
 
 import mondrian.rolap.SqlStatement;

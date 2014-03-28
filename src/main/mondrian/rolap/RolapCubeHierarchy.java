@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2013 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap;
 
 import mondrian.olap.*;
@@ -415,7 +414,7 @@ public class RolapCubeHierarchy extends RolapHierarchy {
         // and update the current relation with the new complex relation
         return join;
     }
-    
+
     /**
      * This structure is used to convey information
      * to the RolapCube during RolapStar creation.

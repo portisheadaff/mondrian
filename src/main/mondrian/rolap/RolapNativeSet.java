@@ -44,7 +44,7 @@ public abstract class RolapNativeSet extends RolapNative {
     private SmartCache<Object, TupleList> cache =
         new SoftSmartCache<Object, TupleList>();
 
-    private SmartCache<Object, Integer> countCache = 
+    private SmartCache<Object, Integer> countCache =
         new SoftSmartCache<Object, Integer>();
     /**
      * Returns whether certain member types (e.g. calculated members) should
@@ -278,7 +278,7 @@ public abstract class RolapNativeSet extends RolapNative {
             }
             return filterInaccessibleTuples(result);
         }
-        
+
         protected int executeCount(final SqlTupleReader tr) {
           tr.setMaxRows(maxRows);
           for (CrossJoinArg arg : args) {
@@ -316,17 +316,17 @@ public abstract class RolapNativeSet extends RolapNative {
 //              TupleEvent e = new TupleEvent(this, tr);
 //              listener.executingSql(e);
 //          }
-          
+
           DataSource dataSource = schemaReader.getDataSource();
           int count = ((SqlTupleReader)tr).countTuples(dataSource);
 
           // TODO: Support Count Cache
-          
+
           if (!MondrianProperties.instance().DisableCaching.get()) {
               countCache.put(key, new Integer(count));
           }
-          
-          // TODO: Note, this method won't work against secured tuples, we 
+
+          // TODO: Note, this method won't work against secured tuples, we
           // should have already detected this eariler in the process.
           // filterInaccessibleTuples(result)
           return  count;

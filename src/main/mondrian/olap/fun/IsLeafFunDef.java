@@ -4,8 +4,7 @@
 // http://www.eclipse.org/legal/epl-v10.html.
 // You must accept the terms of that agreement to use this software.
 //
-// Copyright (C) 2014-2014 Pentaho
-// All Rights Reserved.
+// Copyright (c) 2002-2014 Pentaho Corporation.  All rights reserved.
 */
 package mondrian.olap.fun;
 
@@ -69,10 +68,12 @@ public class IsLeafFunDef extends FunDefBase {
 
                 //Ragged: check if is a ragged hierarchy
                 if (rolapLevel.getHierarchy().isRagged()) {
-
                     if (evaluator.getSchemaReader().getRole().getAccessDetails(
-                            rolapMember.getHierarchy()).getBottomLevelDepth()  == rolapLevel.getDepth())
+                            rolapMember.getHierarchy()).getBottomLevelDepth()
+                        == rolapLevel.getDepth())
+                    {
                         return true;
+                    }
 
                     return rolapLevel.getDimension()
                             .getSchema().getSchemaReader()
@@ -88,7 +89,8 @@ public class IsLeafFunDef extends FunDefBase {
                  }
 
                 if (evaluator.getSchemaReader().getRole().getAccessDetails(
-                        rolapMember.getHierarchy()).getBottomLevelDepth()  == rolapLevel.getDepth())
+                        rolapMember.getHierarchy())
+                    .getBottomLevelDepth()  == rolapLevel.getDepth())
                     return true;
 
                 return false;

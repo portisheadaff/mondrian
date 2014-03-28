@@ -1,12 +1,11 @@
 /*
-* This software is subject to the terms of the Eclipse Public License v1.0
-* Agreement, available at the following URL:
-* http://www.eclipse.org/legal/epl-v10.html.
-* You must accept the terms of that agreement to use this software.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+// This software is subject to the terms of the Eclipse Public License v1.0
+// Agreement, available at the following URL:
+// http://www.eclipse.org/legal/epl-v10.html.
+// You must accept the terms of that agreement to use this software.
+//
+// Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
-
 package mondrian.spi;
 
 import mondrian.rolap.SqlStatement;
@@ -458,13 +457,13 @@ public interface Dialect {
     boolean supportsUnlimitedValueList();
 
     /**
-     * Returns whether this dialect supports the ability to limit and 
+     * Returns whether this dialect supports the ability to limit and
      * offset a query.
-     * 
+     *
      * @return whether limit and offset are supported.
      */
     boolean supportsLimitAndOffset();
-    
+
     /**
      * Returns true if this Dialect can include expressions in the GROUP BY
      * clause only by adding an expression to the SELECT clause and using
@@ -901,7 +900,7 @@ public interface Dialect {
             }
 
             public Object getValue(Object value) {
-                if ( value instanceof Double ) {
+                if (value instanceof Double) {
                   return ((Double) value).intValue();
                 }
                 return value;
@@ -958,9 +957,9 @@ public interface Dialect {
             String value);
 
         /**
-         * 
+         *
          */
-        public Object getValue( Object value ) {
+        public Object getValue(Object value) {
           return value;
         }
 

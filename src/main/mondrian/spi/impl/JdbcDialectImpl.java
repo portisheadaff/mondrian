@@ -1,12 +1,11 @@
 /*
-* This software is subject to the terms of the Eclipse Public License v1.0
-* Agreement, available at the following URL:
-* http://www.eclipse.org/legal/epl-v10.html.
-* You must accept the terms of that agreement to use this software.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+// This software is subject to the terms of the Eclipse Public License v1.0
+// Agreement, available at the following URL:
+// http://www.eclipse.org/legal/epl-v10.html.
+// You must accept the terms of that agreement to use this software.
+//
+// Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
-
 package mondrian.spi.impl;
 
 import mondrian.olap.MondrianProperties;
@@ -1161,7 +1160,9 @@ public class JdbcDialectImpl implements Dialect {
             LOGGER.debug("NOT Using " + databaseProduct.name() + " dialect");
             return false;
         } catch (SQLException e) {
-            LOGGER.debug("NOT Using " + databaseProduct.name() + " dialect.", e);
+            LOGGER.debug(
+                "NOT Using " + databaseProduct.name()
+                + " dialect.", e);
             return false;
         } finally {
             Util.close(resultSet, statement, null);

@@ -10,7 +10,6 @@
 //
 // jhyde, Feb 14, 2003
 */
-
 package mondrian.test;
 
 import mondrian.calc.ResultStyle;
@@ -8143,11 +8142,11 @@ public class BasicQueryTest extends FoodMartTestCase {
         // Some DBs return 0 when we ask for null. Like Oracle.
         final String returnedValue;
         switch (getTestContext().getDialect().getDatabaseProduct()) {
-            case ORACLE:
-                returnedValue = "0";
-                break;
-            default:
-                returnedValue = "";
+        case ORACLE:
+            returnedValue = "0";
+        break;
+        default:
+            returnedValue = "";
         }
 
         testContext.assertQueryReturns(
@@ -8164,7 +8163,7 @@ public class BasicQueryTest extends FoodMartTestCase {
             + "Row #0: " + returnedValue + "\n");
     }
 
-    public void testLargeDimQuery() {  
+    public void testLargeDimQuery() {
         TestContext testContext = TestContext.instance()
         .createSubstitutingCube(
             "Sales",
@@ -8196,7 +8195,8 @@ public class BasicQueryTest extends FoodMartTestCase {
             + "WHERE\n"
             + "      ([Promotions].[Big Promo], [Time].[1997], [Gender].[F], [Measures].[Unit Sales] )\n"
             + "CELL PROPERTIES\n"
-            + "      VALUE, FORMATTED_VALUE, CELL_ORDINAL, FORE_COLOR, BACK_COLOR, UPDATEABLE, FORMAT_STRING",          
+            + "      VALUE, FORMATTED_VALUE, CELL_ORDINAL, FORE_COLOR, "
+            + "BACK_COLOR, UPDATEABLE, FORMAT_STRING",
             "Axis #0:\n"
             + "{[Promotions].[Big Promo], [Time].[1997], [Gender].[F], [Measures].[Unit Sales]}\n"
             + "Axis #1:\n"
@@ -8336,8 +8336,8 @@ public class BasicQueryTest extends FoodMartTestCase {
             + "Row #25: 655\n"
             + "Row #25: 936\n");
     }
-    
-    public void testLargeDimQuery2() {  
+
+    public void testLargeDimQuery2() {
       TestContext testContext = TestContext.instance()
       .createSubstitutingCube(
           "Sales",
@@ -8369,7 +8369,7 @@ public class BasicQueryTest extends FoodMartTestCase {
           + "     MEMBER [Measures].[(Axis Members Count)] as 'Count(Filter({AddCalculatedMembers({AddCalculatedMembers([Customer IDs].[All Customer IDs].Children)})},Count(Crossjoin({[Customer IDs].CurrentMember}, [All Measures Fullset]), EXCLUDEEMPTY)))', SOLVE_ORDER = 1000\n"
           + "SELECT {[Measures].[(Axis Members Count)]} ON COLUMNS\n"
           + "FROM [Sales]"
-          + "WHERE ([Promotions].[Big Promo], [Time].[1997], [Gender].[F])",          
+          + "WHERE ([Promotions].[Big Promo], [Time].[1997], [Gender].[F])",
           "Axis #0:\n"
           + "{[Promotions].[Big Promo], [Time].[1997], [Gender].[F]}\n"
           + "Axis #1:\n"

@@ -10,7 +10,6 @@
 //
 // jhyde, Mar 6, 2003
 */
-
 package mondrian.test;
 
 import mondrian.olap.*;

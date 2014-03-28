@@ -9,7 +9,6 @@
 // Copyright (C) 2006-2007 CINCOM SYSTEMS, INC.
 // All Rights Reserved.
 */
-
 package mondrian.gui;
 
 import mondrian.gui.MondrianGuiDef.Hierarchy;
@@ -446,7 +445,8 @@ public class SchemaPropertyCellEditor
             activeEditor = listEditor;
 
         } else if (targetClassz == MondrianGuiDef.HierarchyGrant.class
-            && propertyName.equals("rollupPolicy")) {
+            && propertyName.equals("rollupPolicy"))
+        {
             ComboBoxModel cRollupPolicy =
                 new DefaultComboBoxModel(
                     new String[]{"full", "partial", "hidden"});

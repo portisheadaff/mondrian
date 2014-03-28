@@ -8,7 +8,6 @@
 // Copyright (C) 2006-2011 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap.sql;
 
 import mondrian.calc.*;
@@ -141,17 +140,24 @@ public class CrossJoinArgFactory {
         if ("NativizeSet".equalsIgnoreCase(fun.getName()) && args.length == 1) {
             return checkCrossJoinArg(evaluator, args[0], returnAny);
         }
-        if ("AddCalculatedMembers".equalsIgnoreCase(fun.getName()) && args.length == 1) {
+        if ("AddCalculatedMembers".equalsIgnoreCase(fun.getName())
+            && args.length == 1)
+        {
            allArgs = checkCrossJoinArg(evaluator, args[0], returnAny);
-           // Now check to see if any of the "All Args" list contain calculated members.
+           // Now check to see if any of the "All Args" list contain
+           // calculated members.
            // If so, we can't natively evaluate this crossjoin at this time.
            if (allArgs != null) {
                for (CrossJoinArg[] argarr : allArgs) {
                    for (CrossJoinArg arg : argarr) {
-                       List<Member> calcMemberList = evaluator.getSchemaReader().getCalculatedMembers(arg.getLevel());
+                       List<Member> calcMemberList = evaluator.getSchemaReader()
+                            .getCalculatedMembers(arg.getLevel());
                        if (calcMemberList.size() > 0) {
                            if (LOGGER.isDebugEnabled()) {
-                               LOGGER.debug("unable to use native dimension filter due to presence of calculated members in level " + arg.getLevel());
+                                LOGGER.debug(
+                                    "unable to use native dimension "
+                                    + "filter due to presence of calculated "
+                                    + "members in level " + arg.getLevel());
                            }
                            return null;
                        }

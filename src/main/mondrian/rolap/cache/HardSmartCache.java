@@ -8,7 +8,6 @@
 // Copyright (C) 2006-2012 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap.cache;
 
 import java.util.*;

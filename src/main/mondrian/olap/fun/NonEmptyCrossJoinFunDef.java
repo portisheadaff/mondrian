@@ -9,7 +9,6 @@
 // Copyright (C) 2004-2005 SAS Institute, Inc.
 // All Rights Reserved.
 */
-
 package mondrian.olap.fun;
 
 import mondrian.calc.*;

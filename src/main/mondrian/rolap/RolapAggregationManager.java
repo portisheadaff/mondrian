@@ -10,7 +10,6 @@
 //
 // jhyde, 30 August, 2001
 */
-
 package mondrian.rolap;
 
 import mondrian.olap.*;
@@ -286,10 +285,11 @@ public abstract class RolapAggregationManager {
                 if (needToReturnNull) {
                     // check to see if the current member is part of an ignored
                     // unrelated dimension
-                  
+
                   if (!mightReturnNullForUnrelatedDimension(level.getCube())
-                      || needToReturnNullForUnrelatedDimension(level.getCube(), measure.getCube(),
-                          
+                      || needToReturnNullForUnrelatedDimension(
+                          level.getCube(), measure.getCube(),
+
                           new Member[] {member})) {
                       return null;
                   }
@@ -298,8 +298,10 @@ public abstract class RolapAggregationManager {
       }
       return request;
   }
-  
-  public static boolean mightReturnNullForUnrelatedDimension(RolapCube virtualCube) {
+
+  public static boolean mightReturnNullForUnrelatedDimension(
+      RolapCube virtualCube)
+  {
       if (!MondrianProperties.instance()
           .IgnoreMeasureForNonJoiningDimension.get())
       {
@@ -308,7 +310,9 @@ public abstract class RolapAggregationManager {
       return virtualCube.isVirtual();
   }
 
-  public static boolean needToReturnNullForUnrelatedDimension(RolapCube virtualCube, RolapCube baseCube, Member[] members) {
+  public static boolean needToReturnNullForUnrelatedDimension(
+      RolapCube virtualCube, RolapCube baseCube, Member[] members)
+  {
       assert mightReturnNullForUnrelatedDimension(virtualCube)
           : "Should not even call this method if nulls are impossible";
       if (baseCube == null) {

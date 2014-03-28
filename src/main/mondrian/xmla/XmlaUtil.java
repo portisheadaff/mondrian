@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2011 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.xmla;
 
 import mondrian.olap.MondrianException;
@@ -375,7 +374,6 @@ way too noisy
             public List<Parameter> getParameters() {
                 return null;
             }
-
         };
         final Rowset rowset =
             rowsetDefinition.getRowset(

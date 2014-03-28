@@ -1,12 +1,11 @@
 /*
-* This software is subject to the terms of the Eclipse Public License v1.0
-* Agreement, available at the following URL:
-* http://www.eclipse.org/legal/epl-v10.html.
-* You must accept the terms of that agreement to use this software.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+// This software is subject to the terms of the Eclipse Public License v1.0
+// Agreement, available at the following URL:
+// http://www.eclipse.org/legal/epl-v10.html.
+// You must accept the terms of that agreement to use this software.
+//
+// Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
-
 package mondrian.rolap;
 
 import mondrian.olap.Connection;
@@ -1206,11 +1205,11 @@ public class FilterTest extends BatchTestCase {
 
     /**
      * Test for Native Count Filter Scenario
-     * 
+     *
      * TODO: Test Virtual Cubes
      * TODO: Add support for more than just related All members
      */
-    public void testNativeCountFilter() {  
+    public void testNativeCountFilter() {
       TestContext testContext = TestContext.instance()
       .createSubstitutingCube(
           "Sales",
@@ -1228,7 +1227,7 @@ public class FilterTest extends BatchTestCase {
           + "  </Dimension>");
 
       // expected native filter with a join against the fact table
-      String sql = 
+      String sql =
           "select `customer`.`customer_id` as `c0` "
           + "from `customer` as `customer`, `sales_fact_1997` as `sales_fact_1997`, "
           + "`time_by_day` as `time_by_day`, `promotion` as `promotion` "
@@ -1240,7 +1239,7 @@ public class FilterTest extends BatchTestCase {
           + "and `customer`.`gender` = 'F' "
           + "group by `customer`.`customer_id` "
           + "order by ISNULL(`customer`.`customer_id`) ASC, `customer`.`customer_id` ASC";
-      String mdx = 
+      String mdx =
           "WITH\n"
           + "     SET [Customer IDs Fullset] AS 'Filter({AddCalculatedMembers([Customer IDs].[All Customer IDs].Children)}, (Count(CrossJoin({[Customer IDs].CurrentMember},CrossJoin({AddCalculatedMembers({[Store IDs].[All Store IDs].Children, [Store IDs].[All Store IDs]})},{[Measures].[Unit Sales]})), ExcludeEmpty)))'\n"
           + "     SET [Customer IDs Subset] AS 'Subset([Customer IDs Fullset], 0, 25)'\n"
@@ -1253,7 +1252,7 @@ public class FilterTest extends BatchTestCase {
           + "      ([Promotions].[Big Promo], [Time].[1997], [Gender].[F], [Measures].[Unit Sales] )\n"
           + "CELL PROPERTIES\n"
           + "      VALUE, FORMATTED_VALUE, CELL_ORDINAL, FORE_COLOR, BACK_COLOR, UPDATEABLE, FORMAT_STRING";
-      
+
       assertQuerySql(
           testContext,
           mdx,
@@ -1262,7 +1261,7 @@ public class FilterTest extends BatchTestCase {
           });
 
       testContext.assertQueryReturns(
-          mdx,          
+          mdx,
           "Axis #0:\n"
           + "{[Promotions].[Big Promo], [Time].[1997], [Gender].[F], [Measures].[Unit Sales]}\n"
           + "Axis #1:\n"

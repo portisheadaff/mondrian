@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2012 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap;
 
 import mondrian.calc.Calc;
@@ -310,7 +309,8 @@ public class RolapCube extends CubeBase {
 
         checkOrdinals(xmlCube.name, measureList);
         loadAggGroup(xmlCube);
-        CalculatedCellUtil.processCalculatedCells(this, xmlCube.calculatedCells, cellCalcs);
+        CalculatedCellUtil.processCalculatedCells(
+            this, xmlCube.calculatedCells, cellCalcs);
     }
 
     /**
@@ -679,7 +679,8 @@ public class RolapCube extends CubeBase {
                 new MeasureMemberSource(
                     this.measuresHierarchy,
                     Util.<RolapMember>cast(finalMeasureMembers))));
-        CalculatedCellUtil.processCalculatedCells(this, xmlVirtualCube.calculatedCells, cellCalcs);
+        CalculatedCellUtil.processCalculatedCells(
+            this, xmlVirtualCube.calculatedCells, cellCalcs);
         // Note: virtual cubes do not get aggregate
     }
 
@@ -1839,8 +1840,10 @@ public class RolapCube extends CubeBase {
                         if (hier.manyToManyAddlJoins != null
                             && hier.manyToManyAddlJoins.size() > 0)
                         {
-                            for (RolapCubeHierarchy.ManyToManyAddlJoin addlJoin : 
-                              ((RolapCubeHierarchy)hierarchy1).manyToManyAddlJoins) {
+                            for (RolapCubeHierarchy.ManyToManyAddlJoin addlJoin
+                                : ((RolapCubeHierarchy)hierarchy1)
+                                .manyToManyAddlJoins)
+                            {
                                 // find the bridge table
                                 RolapStar.Table t =
                                     table.findAncestor(addlJoin.bridgeTable);

@@ -88,10 +88,14 @@ public class RolapNativeFilter extends RolapNativeSet {
                     sqlQuery, aggStar, getEvaluator(), args[0].getLevel());
             String filterSql = sql.generateFilterCondition(filterExpr);
 
-            // <NOOP> is used because there is a previous check to make sure filter conditions aren't null,
-            // and there is a usecase where the filter is simply "COUNT(Member.CurrentMember, NONEMPTY)"
-            // AKA a Non Empty Check, which just needs to join to the fact table.
-            if (filterSql != null && !filterSql.equals("<NOOP>") && !filterSql.equals("(<NOOP>) ")) {
+            // <NOOP> is used because there is a previous check to make sure
+            // filter conditions aren't null, and there is a usecase where
+            // the filter is simply "COUNT(Member.CurrentMember, NONEMPTY)"
+            // AKA a Non Empty Check, which just needs to join to the fact
+            //table.
+            if (filterSql != null && !filterSql.equals("<NOOP>")
+                && !filterSql.equals("(<NOOP>) "))
+            {
                 sqlQuery.addHaving(filterSql);
             }
             if (getEvaluator().isNonEmpty() || isJoinRequired()) {

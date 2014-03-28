@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2006 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.recorder;
 
 import mondrian.olap.MondrianException;

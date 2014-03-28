@@ -8,12 +8,13 @@
 // Copyright (C) 2005-2009 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap;
+
+import mondrian.olap.MondrianDef;
 
 import java.util.ArrayList;
 import java.util.List;
-import mondrian.olap.MondrianDef;
+
 
 /**
  * Provides the base cubes that a virtual cube uses and
@@ -31,11 +32,11 @@ public class RolapCubeUsages {
         this.cubeNames = new ArrayList<String>();
         if (cubeUsages != null && cubeUsages.cubeUsages != null) {
           for (MondrianDef.CubeUsage usage : cubeUsages.cubeUsages) {
-            cubeNames.add( usage.cubeName );
+            cubeNames.add(usage.cubeName);
           }
         }
     }
-    
+
     public List<String> getCubeNames() {
       return cubeNames;
     }

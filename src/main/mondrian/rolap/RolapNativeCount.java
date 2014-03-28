@@ -49,7 +49,7 @@ public class RolapNativeCount extends RolapNativeSet {
         if (!"Count".equalsIgnoreCase(funName)) {
             return null;
         }
-        
+
         if (!(args[0] instanceof ResolvedFunCall)) {
             return null;
         }
@@ -57,28 +57,31 @@ public class RolapNativeCount extends RolapNativeSet {
         ResolvedFunCall call = (ResolvedFunCall)args[0];
 
         if (call.getFunDef().getName().equals("Cache")) {
-            if (call.getArg( 0 ) instanceof ResolvedFunCall) {
+            if (call.getArg(0) instanceof ResolvedFunCall) {
                 call = (ResolvedFunCall)call.getArg(0);
             } else {
                 return null;
             }
         }
 
-        // TODO: Note that this native evaluator won't work against tuples that are mapped to
-        // security, because the security is usually applied after native evaluation.
-        // Before this can be considered valid we need to test in that usecase and 
-        // either push down the security into SQL or not natively evaluate.
-        
-        // TODO: Need to support empty and non-empty second parameter in the correct manner here
-        
-        NativeEvaluator eval = evaluator.getSchemaReader().getSchema().getNativeRegistry().createEvaluator(
-            evaluator, call.getFunDef(), call.getArgs());
-        
+        // TODO: Note that this native evaluator won't work against tuples that
+        // are mapped to security, because the security is usually applied
+        // after native evaluation.
+        // Before this can be considered valid we need to test in that usecase
+        // and either push down the security into SQL or not natively evaluate.
+
+        // TODO: Need to support empty and non-empty second parameter in the
+        //correct manner here
+
+        NativeEvaluator eval =
+            evaluator.getSchemaReader().getSchema().getNativeRegistry()
+            .createEvaluator(evaluator, call.getFunDef(), call.getArgs());
+
         if (eval != null) {
-            LOGGER.debug("using native count");  
+            LOGGER.debug("using native count");
         }
         return eval;
     }
 }
 
-// End RolapNativeFilter.java
+// End RolapNativeCount.java

@@ -1362,7 +1362,7 @@ public class FunctionTest extends FoodMartTestCase {
             + "{[Store].[USA]}\n"
             + "Row #0: 74,748\n"
             + "Row #0: 266,773\n");
-        // With the changes made to Ancestors function always return 1 when using
+        // Changes made to Ancestors function always return 1 when using
         // Mondrian property AncestorOneMember
         // Test that we can count the number of ancestors.
         assertQueryReturns(
@@ -5551,6 +5551,28 @@ public class FunctionTest extends FoodMartTestCase {
             "foo");
     }
 
+    public void testIsError()
+    {
+        // Test for null
+        assertExprReturns(
+            "iif (iserror(null), \"is error\", \"not is error\")",
+            "is error");
+        // Test division by zero
+        assertExprReturns(
+            "iif (iserror(25/0), \"is error\", \"not is error\")",
+            "is error");
+        // Test operation
+        assertExprReturns(
+            "iif (iserror(25 + 10), 0, 25 + 10)",
+            "35");
+        // Test member
+        assertExprReturns(
+            "iif (iserror(StrToMember('[Measures].[Unit Sales],[Product]."
+            + "[Drink].[Alcoholic Beverages].[Beer and Wine]'))"
+            + ", \"is error\", \"not is error\")",
+            "not is error");
+    }
+
     public void testIsEmptyWithNull()
     {
         assertExprReturns(
@@ -9241,7 +9263,6 @@ public class FunctionTest extends FoodMartTestCase {
 
     public void testMembersFromString2()
     {
-
     }
 
     public void testStrToMemberFullyQualifiedName() {

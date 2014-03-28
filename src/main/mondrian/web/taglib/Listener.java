@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2007 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.web.taglib;
 
 import javax.servlet.ServletContextEvent;

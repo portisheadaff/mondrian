@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2011 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.test.loader;
 
 import java.io.*;

@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2010 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.xmla;
 
 /**

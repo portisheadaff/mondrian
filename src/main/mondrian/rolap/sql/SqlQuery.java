@@ -197,7 +197,7 @@ public class SqlQuery {
     public void setOffset(Integer offset) {
       this.offset = offset;
     }
-    
+
     /**
      * If supported by the dialect, set a limit for the query.
      */

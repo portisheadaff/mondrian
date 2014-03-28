@@ -179,8 +179,8 @@ public class ManyToManyTest  extends CsvDBTestCase {
             + "\n"
             + "  <Cube name=\"M2M\">\n"
             + "    <Table name=\"m2m_fact_balance\">\n"
-            + (withAggTbl ? 
-              "      <AggName name=\"m2m_fact_balance_mlvl_agg\">\n"
+            + (withAggTbl
+            ? "      <AggName name=\"m2m_fact_balance_mlvl_agg\">\n"
             + "        <AggFactCount column=\"fact_count\"/>\n"
             + "        <AggForeignKey factColumn=\"id_date\" aggColumn=\"id_date\" />\n"
             + "        <AggMeasure name=\"[Measures].[Amount]\" column=\"amount_sum\"/>\n"
@@ -188,7 +188,7 @@ public class ManyToManyTest  extends CsvDBTestCase {
             + "        <AggLevel name=\"[Account].[AcctType]\" column=\"acct_type\"/>\n"
             + "        <AggLevel name=\"[Customer].[Location]\" column=\"cust_loc\"/>\n"
             + "      </AggName>\n"
-              : "" )
+              : "")
             + "    </Table>\n"
             + "    <DimensionUsage name=\"Account\" source=\"Account\" foreignKey=\"id_account\"/>\n"
             + "    <DimensionUsage name=\"Customer\" source=\"Customer\" foreignKey=\"id_account\" bridgeCube=\"CustomerAccountBridge\"/>\n"
@@ -412,7 +412,7 @@ public class ManyToManyTest  extends CsvDBTestCase {
             + "    <Hierarchy name=\"Category\" primaryKey=\"id_category\" hasAll=\"true\">\n"
             + "      <View alias=\"m2m_spending_category_view\">\n"
             + "         <SQL dialect=\"generic\">SELECT * FROM m2m_spending_category_dim</SQL>\n"
-            + "      </View>\n"          
+            + "      </View>\n"
             + "      <!-- <Table name=\"m2m_spending_category_dim\"/> -->\n"
             + "      <Level name=\"Category\" uniqueMembers=\"true\" column=\"id_category\"  type=\"Integer\" nameColumn=\"nm_category\" approxRowCount=\"5\"/>\n"
             + "    </Hierarchy>\n"
@@ -559,8 +559,7 @@ public class ManyToManyTest  extends CsvDBTestCase {
             + "{[Gender].[Female], [Year].[2014]}\n"
             + "Axis #2:\n"
             + "{[Measures].[Spending]}\n"
-            + "Row #0: 725\n"
-            );
+            + "Row #0: 725\n");
     }
 
     public void testMultiJoinM2MScenarios(TestContext context) {

@@ -8,7 +8,6 @@
 // Copyright (C) 2008-2009 Pentaho
 // All Rights Reserved.
 */
-
 package mondrian.gui;
 
 import org.apache.log4j.Logger;

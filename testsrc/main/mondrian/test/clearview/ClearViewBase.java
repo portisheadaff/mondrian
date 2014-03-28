@@ -10,7 +10,6 @@
 //
 // jhyde, Feb 14, 2003
 */
-
 package mondrian.test.clearview;
 
 import mondrian.olap.MondrianProperties;

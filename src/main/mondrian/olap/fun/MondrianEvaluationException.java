@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2005 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.olap.fun;
 
 /**

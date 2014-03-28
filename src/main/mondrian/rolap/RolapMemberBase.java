@@ -8,7 +8,6 @@
 // Copyright (C) 2005-2013 Pentaho and others
 // All Rights Reserved.
 */
-
 package mondrian.rolap;
 
 import mondrian.calc.Calc;
@@ -387,7 +386,8 @@ public class RolapMemberBase
                     // other options were big performance hits on adomd's
                     // executeCellSet
                     return 1;
-                    // return childLevel.getDimension().getSchema().getSchemaReader()
+                    // return childLevel.getDimension().getSchema()
+                    // .getSchemaReader()
                     //    .getLevelCardinality(childLevel, true, true);
                 }
                 return Locus.execute(
@@ -406,7 +406,6 @@ public class RolapMemberBase
                                         RolapMemberBase.this);
                             }
                         }
-
                     }
                 );
 
