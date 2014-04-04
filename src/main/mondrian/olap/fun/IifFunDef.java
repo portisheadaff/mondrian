@@ -112,6 +112,19 @@ public class IifFunDef extends FunDefBase {
                 compiler.compileBoolean(call.getArg(0));
             final StringCalc calc1 = compiler.compileString(call.getArg(1));
             final StringCalc calc2 = compiler.compileString(call.getArg(2));
+
+            if (MondrianProperties.instance().TypeInvariance.get()) {
+                return new GenericCalc(call) {
+                    @Override
+                    public Object evaluate(Evaluator evaluator) {
+                        final boolean b =
+                                booleanCalc.evaluateBoolean(evaluator);
+                        Calc calc = b ? calc1 : calc2;
+                        return calc.evaluate(evaluator);
+                    }
+                };
+            }
+
             return new AbstractStringCalc(
                 call, new Calc[] {booleanCalc, calc1, calc2}) {
                 public String evaluateString(Evaluator evaluator) {
@@ -135,6 +148,10 @@ public class IifFunDef extends FunDefBase {
             {
                 final BooleanCalc booleanCalc =
                     compiler.compileBoolean(call.getArg(0));
+
+                // ANIBAL
+                //final Calc calc1 = compiler.compile(call.getArg(1));
+                //final Calc calc2 = compiler.compile(call.getArg(2));
                 final Calc calc1 = compiler.compileScalar(call.getArg(1), true);
                 final Calc calc2 = compiler.compileScalar(call.getArg(2), true);
                 return new GenericCalc(call) {
@@ -242,6 +259,9 @@ public class IifFunDef extends FunDefBase {
             "IIf",
             "Returns one of two set values determined by a logical test.",
             "fxbxx");
+
+
+
 }
 
 // End IifFunDef.java

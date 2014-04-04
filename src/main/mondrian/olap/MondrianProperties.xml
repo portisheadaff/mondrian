@@ -1376,12 +1376,25 @@ whether to enable new naming behavior.</p>
 
     <PropertyDefinition>
         <Name>AncestorsOneMember</Name>
-        <Path>mondrian.olap.SsasCompatibleNaming</Path>
+        <Path>mondrian.olap.AncestorsOneMember</Path>
         <Description>
             <p>Property that defines
                 whether to return one ancestor member or set of ancestors.</p>
             <p>If true, return a set with one ancestor member; if false,
                 return a set with all ancestors.</p>
+        </Description>
+        <Type>boolean</Type>
+        <Default>false</Default>
+    </PropertyDefinition>
+
+    <PropertyDefinition>
+        <Name>TypeInvariance</Name>
+        <Path>mondrian.olap.TypeInvariance</Path>
+        <Description>
+            <p>Property that defines
+                if difference types can be returned or compared.</p>
+            <p>If true, uses type invariance; if false,
+                no type invariance is used.</p>
         </Description>
         <Type>boolean</Type>
         <Default>false</Default>

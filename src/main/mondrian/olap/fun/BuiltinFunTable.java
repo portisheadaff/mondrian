@@ -18,10 +18,9 @@ import mondrian.olap.fun.extra.CalculatedChildFunDef;
 import mondrian.olap.fun.extra.NthQuartileFunDef;
 import mondrian.olap.fun.vba.Excel;
 import mondrian.olap.fun.vba.Vba;
+import mondrian.olap.type.*;
 import mondrian.olap.type.LevelType;
-import mondrian.olap.type.Type;
 import mondrian.resource.MondrianResource;
-import mondrian.xmla.PropertyDefinition;
 
 import java.io.PrintWriter;
 import java.util.*;
@@ -247,7 +246,6 @@ public class BuiltinFunTable extends FunTableImpl {
         builder.define(IsLeafFunDef.Resolver);
         builder.define(IsFunDef.Resolver);
         builder.define(AsFunDef.RESOLVER);
-        builder.define(IsErrorFunDef.FunctionResolver);
 
         //
         // MEMBER FUNCTIONS
@@ -1790,59 +1788,63 @@ public class BuiltinFunTable extends FunTableImpl {
             }
         });
 
-        // <String Expression> = <String Expression>
-        builder.define(
-            new FunDefBase(
-                "=",
-                "Returns whether two expressions are equal.",
-                "ibSS")
-        {
-            public Calc compileCall(ResolvedFunCall call, ExpCompiler compiler)
-            {
-                final StringCalc calc0 = compiler.compileString(call.getArg(0));
-                final StringCalc calc1 = compiler.compileString(call.getArg(1));
-                return new AbstractBooleanCalc(call, new Calc[] {calc0, calc1})
+        if (MondrianProperties.instance().TypeInvariance.get()) {
+            builder.define(EqualsTypeInvarianceFunDef.resolver);
+        } else {
+            // <String Expression> = <String Expression>
+            builder.define(
+                new FunDefBase(
+                    "=",
+                    "Returns whether two expressions are equal.",
+                    "ibSS")
                 {
-                    public boolean evaluateBoolean(Evaluator evaluator) {
-                        final String b0 = calc0.evaluateString(evaluator);
-                        final String b1 = calc1.evaluateString(evaluator);
-                        if (b0 == null || b1 == null) {
-                            return BooleanNull;
-                        }
-                        return b0.equals(b1);
-                    }
-                };
-            }
-        });
-
-        // <Numeric Expression> = <Numeric Expression>
-        builder.define(
-            new FunDefBase(
-                "=",
-                "Returns whether two expressions are equal.",
-                "ibnn")
-        {
-            public Calc compileCall(ResolvedFunCall call, ExpCompiler compiler)
-            {
-                final DoubleCalc calc0 = compiler.compileDouble(call.getArg(0));
-                final DoubleCalc calc1 = compiler.compileDouble(call.getArg(1));
-                return new AbstractBooleanCalc(call, new Calc[] {calc0, calc1})
-                {
-                    public boolean evaluateBoolean(Evaluator evaluator) {
-                        final double v0 = calc0.evaluateDouble(evaluator);
-                        final double v1 = calc1.evaluateDouble(evaluator);
-                        if (Double.isNaN(v0)
-                            || Double.isNaN(v1)
-                            || v0 == DoubleNull
-                            || v1 == DoubleNull)
+                    public Calc compileCall(ResolvedFunCall call, ExpCompiler compiler)
+                    {
+                        final StringCalc calc0 = compiler.compileString(call.getArg(0));
+                        final StringCalc calc1 = compiler.compileString(call.getArg(1));
+                        return new AbstractBooleanCalc(call, new Calc[] {calc0, calc1})
                         {
-                            return BooleanNull;
-                        }
-                        return v0 == v1;
+                            public boolean evaluateBoolean(Evaluator evaluator) {
+                                final String b0 = calc0.evaluateString(evaluator);
+                                final String b1 = calc1.evaluateString(evaluator);
+                                if (b0 == null || b1 == null) {
+                                    return BooleanNull;
+                                }
+                                return b0.equals(b1);
+                            }
+                        };
                     }
-                };
-            }
-        });
+                });
+
+            // <Numeric Expression> = <Numeric Expression>
+            builder.define(
+                new FunDefBase(
+                    "=",
+                    "Returns whether two expressions are equal.",
+                    "ibnn")
+                {
+                    public Calc compileCall(ResolvedFunCall call, ExpCompiler compiler)
+                    {
+                        final DoubleCalc calc0 = compiler.compileDouble(call.getArg(0));
+                        final DoubleCalc calc1 = compiler.compileDouble(call.getArg(1));
+                        return new AbstractBooleanCalc(call, new Calc[] {calc0, calc1})
+                        {
+                            public boolean evaluateBoolean(Evaluator evaluator) {
+                                final double v0 = calc0.evaluateDouble(evaluator);
+                                final double v1 = calc1.evaluateDouble(evaluator);
+                                if (Double.isNaN(v0)
+                                        || Double.isNaN(v1)
+                                        || v0 == DoubleNull
+                                        || v1 == DoubleNull)
+                                {
+                                    return BooleanNull;
+                                }
+                                return v0 == v1;
+                            }
+                        };
+                    }
+                });
+        }
 
         // <String Expression> <> <String Expression>
         builder.define(
