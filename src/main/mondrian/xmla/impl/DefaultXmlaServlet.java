@@ -772,7 +772,6 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
                 writer.endElement(); // error
                 writer.endElement(); // detail
             }
-
             writer.endElement();   // </Fault>
             writer.endDocument();
         } catch (UnsupportedEncodingException uee) {
