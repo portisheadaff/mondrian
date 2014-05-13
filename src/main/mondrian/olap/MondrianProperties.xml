@@ -1376,6 +1376,37 @@ Default time unit is milliseconds.</p>
         <Default>3000ms</Default>
     </PropertyDefinition>
     <PropertyDefinition>
+        <Name>XmlaUseMSSASError</Name>
+        <Path>mondrian.xmla.UseMSSASError</Path>
+        <Description>
+<p>If set to true, the error element in SOAP Fault responses detail 
+will conform to what's returned by MS SQL Analysis Services and
+recognized by ADOMD.NET.</p>
+        </Description>
+        <Type>Boolean</Type>
+        <Default>false</Default>
+    </PropertyDefinition>
+    <PropertyDefinition>
+        <Name>XmlaAlwaysIncludeDefaultSlicer</Name>
+        <Path>mondrian.xmla.AlwaysIncludeDefaultSlicer</Path>
+        <Description>
+<p>If set to true the slicer axis will always report the default members for unconstrained dimensions.</p>
+        </Description>
+        <Type>Boolean</Type>
+        <Default>false</Default>
+    </PropertyDefinition>
+    <PropertyDefinition>
+        <Name>XmlaCustomProviderVersion</Name>
+        <Path>mondrian.xmla.CustomProviderVersion</Path>
+        <Description>
+<p>If not empty, this will be the ProviderVersion reported by mondrian xmla. This
+  has impact on which properties will throw a NotSupportedException in adomd.</p>
+<p>If left empty mondrian will return its actual version.</p>
+        </Description>
+        <Type>String</Type>
+        <Default></Default>
+    </PropertyDefinition>
+    <PropertyDefinition>
         <Name>FilterChildlessSnowflakeMembers</Name>
         <Path>mondrian.rolap.FilterChildlessSnowflakeMembers</Path>
         <Category>SQL generation</Category>
