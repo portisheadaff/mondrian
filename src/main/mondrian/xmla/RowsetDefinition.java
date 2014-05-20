@@ -6373,7 +6373,10 @@ TODO: see above
 
             row.set(ParentCount.name, member.getParentMember() == null ? 0 : 1);
 
-            row.set(Description.name, "");
+            Object description =
+                member.getPropertyValue(
+                    Property.StandardMemberProperty.DESCRIPTION);
+            row.set(Description.name, description != null ? description : "");
 
             row.set(Depth.name, member.getDepth());
             addRow(row, rows);
