@@ -709,6 +709,7 @@ public enum RowsetDefinition {
             MdschemaDimensionsRowset.DimensionIsVisible,
             MdschemaDimensionsRowset.Hierarchies,
             MdschemaDimensionsRowset.CubeSource,
+            MdschemaDimensionsRowset.DimensionVisibility
         },
         new Column[] {
             MdschemaDimensionsRowset.CatalogName,
@@ -825,6 +826,7 @@ public enum RowsetDefinition {
             MdschemaHierarchiesRowset.HierarchyOrigin,
             MdschemaHierarchiesRowset.HierarchyDisplayFolder,
             MdschemaHierarchiesRowset.CubeSource,
+            MdschemaHierarchiesRowset.HierarchyVisibility,
         },
         new Column[] {
             MdschemaHierarchiesRowset.CatalogName,
@@ -898,6 +900,7 @@ public enum RowsetDefinition {
             MdschemaLevelsRowset.LevelIsVisible,
             MdschemaLevelsRowset.Description,
             MdschemaLevelsRowset.CubeSource,
+            MdschemaLevelsRowset.LevelVisibility,
         },
         new Column[] {
             MdschemaLevelsRowset.CatalogName,
@@ -967,6 +970,7 @@ public enum RowsetDefinition {
             MdschemaMeasuresRowset.Description,
             MdschemaMeasuresRowset.FormatString,
             MdschemaMeasuresRowset.CubeSource,
+            MdschemaMeasuresRowset.MeasureVisibility
         },
         new Column[] {
             MdschemaMeasuresRowset.CatalogName,
@@ -4221,6 +4225,15 @@ TODO: see above
                 Column.OPTIONAL,
                 "Hierarchies in this dimension.");
 
+        private static final Column DimensionVisibility =
+            new Column(
+                "DIMENSION_VISIBILITY",
+                Type.Boolean,
+                null,
+                Column.RESTRICTION,
+                Column.OPTIONAL,
+                "Always TRUE.");
+
         public void populateImpl(
             XmlaResponse response,
             OlapConnection connection,
@@ -4329,6 +4342,7 @@ TODO: see above
             // How are they mapped to specific column numbers?
             row.set(DimensionUniqueSettings.name, 0);
             row.set(DimensionIsVisible.name, dimension.isVisible());
+            row.set(DimensionVisibility.name, true);
             if (deep) {
                 row.set(
                     Hierarchies.name,
@@ -4800,6 +4814,15 @@ TODO: see above
                 Column.OPTIONAL,
                 "Is hierarchy a parent.");
 
+        private static final Column HierarchyVisibility =
+            new Column(
+                "HIERARCHY_VISIBILITY",
+                Type.Boolean,
+                null,
+                Column.RESTRICTION,
+                Column.OPTIONAL,
+                "Always TRUE.");
+
         public void populateImpl(
             XmlaResponse response,
             OlapConnection connection,
@@ -4951,6 +4974,7 @@ TODO: see above
             row.set(HierarchyDisplayFolder.name, "");
 
             row.set(ParentChild.name, isParentChild);
+            row.set(HierarchyVisibility.name, true);
             if (deep) {
                 row.set(
                     Levels.name,
@@ -5168,6 +5192,15 @@ TODO: see above
                 "A human-readable description of the level. NULL if no "
                 + "description exists.");
 
+        private static final Column LevelVisibility =
+            new Column(
+                "LEVEL_VISIBILITY",
+                Type.Boolean,
+                null,
+                Column.RESTRICTION,
+                Column.OPTIONAL,
+                "Always TRUE.");
+
         public void populateImpl(
             XmlaResponse response,
             OlapConnection connection,
@@ -5306,6 +5339,7 @@ TODO: see above
             row.set(LevelUniqueSettings.name, uniqueSettings);
             row.set(LevelIsVisible.name, level.isVisible());
             row.set(Description.name, desc);
+            row.set(LevelVisibility.name, true);
             addRow(row, rows);
             return true;
         }
@@ -5531,6 +5565,7 @@ TODO: see above
                 Column.REQUIRED,
                 "A Boolean that always returns True. If the measure is not "
                 + "visible, it will not be included in the schema rowset.");
+
         private static final Column LevelsList =
             new Column(
                 "LEVELS_LIST",
@@ -5556,6 +5591,14 @@ TODO: see above
                 Column.NOT_RESTRICTION,
                 Column.OPTIONAL,
                 "The default format string for the measure.");
+        private static final Column MeasureVisibility =
+            new Column(
+                "MEASURE_VISIBILITY",
+                Type.Boolean,
+                null,
+                Column.RESTRICTION,
+                Column.OPTIONAL,
+                "Always TRUE.");
 
         public void populateImpl(
             XmlaResponse response,
@@ -5664,7 +5707,11 @@ TODO: see above
             row.set(MeasureName.name, member.getName());
             row.set(MeasureUniqueName.name, member.getUniqueName());
             row.set(MeasureCaption.name, member.getCaption());
-            //row.set(MeasureGuid.name, "");
+
+            //Hard coded for compabillity with MS Schema
+            //row.set(MeasureVisibility.name, true);
+
+            // row.set(MeasureGuid.name, "");
 
             final XmlaHandler.XmlaExtra extra = getExtra(connection);
             row.set(MeasureAggregator.name, extra.getMeasureAggregator(member));
@@ -5698,6 +5745,7 @@ TODO: see above
 
             row.set(Description.name, desc != null ? desc : "");
             row.set(FormatString.name, formatString);
+            row.set(MeasureVisibility.name, true);
             addRow(row, rows);
         }
 
@@ -5962,6 +6010,7 @@ TODO: see above
                 Column.RESTRICTION,
                 Column.OPTIONAL,
                 "The type of source cube (cube=1, dimension=2).  Not Supported.");
+
         public void populateImpl(
             XmlaResponse response,
             OlapConnection connection,

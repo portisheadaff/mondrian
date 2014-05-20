@@ -125,6 +125,10 @@
                     name=DIMENSION_IS_VISIBLE
                     type=xsd:boolean
                     sql:field=DIMENSION_IS_VISIBLE>
+                <xsd:element
+                    name=DIMENSION_VISIBILITY
+                    type=xsd:boolean
+                    sql:field=DIMENSION_VISIBILITY>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:schema>
@@ -146,6 +150,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -165,6 +170,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -184,6 +190,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -203,6 +210,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -222,6 +230,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -241,6 +250,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -260,6 +270,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -279,6 +290,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -298,6 +310,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -318,6 +331,7 @@
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_MASTER_UNIQUE_NAME>[Store Size in SQFT]</DIMENSION_MASTER_UNIQUE_NAME>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -338,6 +352,7 @@
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_MASTER_UNIQUE_NAME>[Store Type]</DIMENSION_MASTER_UNIQUE_NAME>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -357,6 +372,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
     <row
         xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
@@ -376,6 +392,7 @@
         <IS_READWRITE>false</IS_READWRITE>
         <DIMENSION_UNIQUE_SETTINGS>0</DIMENSION_UNIQUE_SETTINGS>
         <DIMENSION_IS_VISIBLE>true</DIMENSION_IS_VISIBLE>
+        <DIMENSION_VISIBILITY>true</DIMENSION_VISIBILITY>
     </row>
   </root>
   </return>

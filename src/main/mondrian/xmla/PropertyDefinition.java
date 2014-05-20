@@ -258,6 +258,14 @@ public enum PropertyDefinition {
         XmlaConstants.Access.Read,
         "false",
         XmlaConstants.Method.DISCOVER_AND_EXECUTE,
+        ""),
+    // Show Hidden Cubes property
+    ShowHiddenCubes(
+        RowsetDefinition.Type.Boolean,
+        null,
+        XmlaConstants.Access.Read,
+        "false",
+        XmlaConstants.Method.DISCOVER,
         "");
 
     final RowsetDefinition.Type type;
